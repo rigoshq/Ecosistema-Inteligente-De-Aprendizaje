@@ -13,8 +13,8 @@ public class Mission
     public string Subject { get; private set; }
 
     public int Experience { get; private set; }
-
-    public bool IsCompleted { get; private set; }
+    
+    public MissionStatus Status { get; private set; }
 
     public Mission(
         string code,
@@ -35,11 +35,16 @@ public class Mission
 
         Experience = experience;
 
-        IsCompleted = false;
+        Status = MissionStatus.Available;
+    }
+
+    public void Start()
+    {
+    Status = MissionStatus.InProgress;
     }
 
     public void Complete()
     {
-        IsCompleted = true;
+    Status = MissionStatus.Completed;
     }
 }
