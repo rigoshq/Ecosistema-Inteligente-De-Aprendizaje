@@ -1,6 +1,9 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using EIA.Core.DTOs;
 using EIA.Core.Repositories;
-using EIA.Domain.Entities;
+using EIA.Domain.Entities.Explorer;
 
 namespace EIA.Core.Services;
 
@@ -10,22 +13,30 @@ public class ExplorerService
 
     public ExplorerService(IExplorerRepository repository)
     {
-        _repository = repository;
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task RegisterAsync(ExplorerRegistrationDto dto)
+    public async Task<Explorer> RegisterAsync(ExplorerRegistrationDto dto)
     {
-        var explorer = new Explorer(
-            dto.FirstName,
-            dto.LastName,
-            dto.UserName,
-            dto.Email);
+        // ✅ Usamos el constructor de la entidad con los 4 parámetros requeridos
+        var newExplorer = new Explorer(
+            firstName: dto.FirstName,
+            lastName: dto.LastName,
+            userName: dto.UserName,
+            email: dto.Email // ⚠️ Aquí está el parámetro que faltaba
+        );
 
-        await _repository.AddAsync(explorer);
+        await _repository.AddAsync(newExplorer);
+        return newExplorer;
     }
 
     public async Task<List<Explorer>> GetAllAsync()
     {
         return await _repository.GetAllAsync();
+    }
+
+    public async Task<Explorer?> GetByIdAsync(Guid id)
+    {
+        return await _repository.GetByIdAsync(id);
     }
 }

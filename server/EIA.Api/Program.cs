@@ -1,6 +1,5 @@
 using EIA.Core.Repositories;
 using EIA.Core.Services;
-using EIA.Infrastructure.Repositories;
 using EIA.Core.World;
 using EIA.Infrastructure.Seed;
 using EIA.Domain.Entities;
