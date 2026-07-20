@@ -130,13 +130,7 @@ public class Explorer
         if (ActiveMissions.Any(m => m.MissionId == mission.Id))
             return;
 
-        ActiveMissions.Add(new ExplorerMission
-        {
-            MissionId = mission.Id,
-            MissionCode = mission.Code,
-            MissionName = mission.Name,
-            AcceptedAt = DateTime.UtcNow
-        });
+    ActiveMissions.Add(new ExplorerMission(mission.Id));
     }
 
     public void CompleteMission(Guid missionId)
@@ -154,4 +148,5 @@ public class Explorer
 
         MissionsCompleted++;
     }
+    
 }
