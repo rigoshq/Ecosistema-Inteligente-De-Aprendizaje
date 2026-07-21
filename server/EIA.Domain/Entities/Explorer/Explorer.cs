@@ -1,6 +1,8 @@
+
 using EIA.Domain.Entities.Explorer.Achievements;
 using EIA.Domain.Entities.Explorer.Inventory;
 using EIA.Domain.Entities.Missions;
+using EIA.Domain.Navigation;
 
 namespace EIA.Domain.Entities.Explorer; 
 
@@ -26,6 +28,8 @@ public class Explorer
 
     public int LaboratoriesCompleted { get; private set; }
 
+    public WorldPosition? Position { get; private set; }
+
     public List<InventoryItem> Inventory { get; }
 
     public List<Achievement> Achievements { get; }
@@ -49,6 +53,8 @@ public class Explorer
         Experience = 0;
 
         Coins = 0;
+
+        Position = null;
 
         Inventory = new();
 
@@ -148,5 +154,17 @@ public class Explorer
 
         MissionsCompleted++;
     }
-    
+    public void EnterWorld(WorldLocation initialLocation)
+    {
+    Position = new WorldPosition(initialLocation);
+    }
+
+public void MoveTo(WorldLocation location)
+    {
+    if (Position is null)
+        throw new InvalidOperationException(
+            "The explorer has not entered the learning world.");
+
+    Position.MoveTo(location);
+    }
 }
