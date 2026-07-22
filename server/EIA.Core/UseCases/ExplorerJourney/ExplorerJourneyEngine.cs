@@ -2,6 +2,7 @@ using EIA.Domain.Entities.Dialogue;
 using EIA.Domain.Entities.LearningExperiences;
 using EIA.Domain.Entities.Missions;
 using EIA.Domain.Entities.NPC;
+using DialogueEntity = EIA.Domain.Entities.Dialogue.Dialogue;
 
 namespace EIA.Core.UseCases.ExplorerJourney;
 
@@ -22,13 +23,13 @@ public class ExplorerJourneyEngine
     {
         context.SetNpc(npc);
 
-       return ExplorerJourneyResult.Ok(
-    "Explorer meets the NPC.");
+        return ExplorerJourneyResult.Ok(
+            $"Explorer meets {npc.FullName}.");
     }
 
     public ExplorerJourneyResult StartDialogue(
         ExplorerJourneyContext context,
-        Dialogue dialogue)
+        DialogueEntity dialogue)
     {
         context.SetDialogue(dialogue);
 

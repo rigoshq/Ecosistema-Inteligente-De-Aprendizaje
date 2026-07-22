@@ -1,7 +1,6 @@
 using EIA.Domain.Entities.NPC.Enums;
+
 namespace EIA.Domain.Entities.NPC;
-
-
 
 public class Npc
 {
@@ -14,7 +13,7 @@ public class Npc
     public NpcKnowledge Knowledge { get; private set; }
 
     public bool Active { get; private set; }
-    
+
     public NpcEmotion Emotion { get; private set; }
 
     public NpcLocation Location { get; private set; }
@@ -24,36 +23,42 @@ public class Npc
     public NpcMemory Memory { get; private set; }
 
     public NpcSchedule Schedule { get; private set; }
-   
+
+
+    // Propiedad de lectura para compatibilidad con los UseCases
+    public string FullName => Identity.FullName;
+
+
     private Npc()
-{
-    Id = Guid.NewGuid();
+    {
+        Id = Guid.NewGuid();
 
-    Identity = null!;
+        Identity = null!;
 
-    Personality = null!;
+        Personality = null!;
 
-    Knowledge = new();
+        Knowledge = new();
 
-    Location = new NpcLocation(
-        "",
-        "",
-        "",
-        0,
-        0,
-        0,
-        0);
+        Location = new NpcLocation(
+            "",
+            "",
+            "",
+            0,
+            0,
+            0,
+            0);
 
-    Active = true;
+        Active = true;
 
-    Emotion = NpcEmotion.Neutral;
+        Emotion = NpcEmotion.Neutral;
 
-    Dialogues = new();
+        Dialogues = new();
 
-    Memory = new();
+        Memory = new();
 
-    Schedule = new();
-}
+        Schedule = new();
+    }
+
 
     public Npc(
         NpcIdentity identity,
@@ -65,38 +70,49 @@ public class Npc
         Personality = personality;
     }
 
+
     public void Deactivate()
     {
         Active = false;
     }
 
+
     public void Activate()
     {
         Active = true;
     }
+
+
     public void SetEmotion(NpcEmotion emotion)
     {
-    Emotion = emotion;
-    }
-    public void AddDialogue(NpcDialogue dialogue)
-    {
-    Dialogues.Add(dialogue);
-    }
-    public void RegisterInteraction(
-    Guid? missionId,
-    string topic)
-    {
-    Memory.RegisterInteraction(
-        missionId,
-        topic);
-    }
-    public void MoveToBuilding(string building)
-    {
-    Schedule.MoveTo(building);
+        Emotion = emotion;
     }
 
-public bool IsAvailable(TimeOnly time)
+
+    public void AddDialogue(NpcDialogue dialogue)
     {
-    return Schedule.IsWorking(time);
+        Dialogues.Add(dialogue);
+    }
+
+
+    public void RegisterInteraction(
+        Guid? missionId,
+        string topic)
+    {
+        Memory.RegisterInteraction(
+            missionId,
+            topic);
+    }
+
+
+    public void MoveToBuilding(string building)
+    {
+        Schedule.MoveTo(building);
+    }
+
+
+    public bool IsAvailable(TimeOnly time)
+    {
+        return Schedule.IsWorking(time);
     }
 }

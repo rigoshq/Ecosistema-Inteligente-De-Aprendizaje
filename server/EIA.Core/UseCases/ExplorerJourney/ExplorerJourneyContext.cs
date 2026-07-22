@@ -1,9 +1,9 @@
 using EIA.Domain.Entities;
-using EIA.Domain.Entities.Dialogue;
 using EIA.Domain.Entities.Explorer;
 using EIA.Domain.Entities.LearningExperiences;
 using EIA.Domain.Entities.Missions;
 using EIA.Domain.Entities.NPC;
+using DialogueEntity = EIA.Domain.Entities.Dialogue.Dialogue;
 
 namespace EIA.Core.UseCases.ExplorerJourney;
 
@@ -15,13 +15,14 @@ public class ExplorerJourneyContext
 
     public Npc? CurrentNpc { get; private set; }
 
-    public Dialogue? CurrentDialogue { get; private set; }
+    public DialogueEntity? Dialogue { get; private set; }
 
     public Mission? CurrentMission { get; private set; }
 
     public LearningExperience? CurrentLearningExperience { get; private set; }
 
     public ExplorerJourneyState State { get; private set; }
+
 
     public ExplorerJourneyContext(
         Explorer explorer,
@@ -34,10 +35,12 @@ public class ExplorerJourneyContext
         State = ExplorerJourneyState.Created;
     }
 
+
     public void Start()
     {
         State = ExplorerJourneyState.Started;
     }
+
 
     public void SetNpc(Npc npc)
     {
@@ -46,10 +49,12 @@ public class ExplorerJourneyContext
         State = ExplorerJourneyState.TalkingToNpc;
     }
 
-    public void SetDialogue(Dialogue dialogue)
+
+    public void SetDialogue(DialogueEntity dialogue)
     {
-        CurrentDialogue = dialogue;
+        Dialogue = dialogue;
     }
+
 
     public void SetMission(Mission mission)
     {
@@ -57,6 +62,7 @@ public class ExplorerJourneyContext
 
         State = ExplorerJourneyState.MissionAccepted;
     }
+
 
     public void SetLearningExperience(
         LearningExperience learningExperience)
@@ -66,10 +72,12 @@ public class ExplorerJourneyContext
         State = ExplorerJourneyState.LearningStarted;
     }
 
+
     public void GrantReward()
     {
         State = ExplorerJourneyState.RewardGranted;
     }
+
 
     public void Complete()
     {

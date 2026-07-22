@@ -1,4 +1,4 @@
-using EIA.Domain.Entities.Dialogue;
+using DialogueEntity = EIA.Domain.Entities.Dialogue.Dialogue;
 using EIA.Domain.Entities.LearningExperiences;
 using EIA.Domain.Entities.Missions;
 using EIA.Domain.Entities.NPC;
@@ -18,7 +18,7 @@ public class NewtonCampusScenario
     public ExplorerJourneyResult Execute(
         ExplorerJourneyContext context,
         Npc professor,
-        Dialogue dialogue,
+        DialogueEntity dialogue,
         Mission mission,
         LearningExperience learningExperience)
     {

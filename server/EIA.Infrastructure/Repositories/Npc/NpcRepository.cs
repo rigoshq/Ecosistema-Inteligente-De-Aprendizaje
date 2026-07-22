@@ -1,58 +1,29 @@
 using EIA.Core.Interfaces.Repositories;
-using DomainNpc = EIA.Domain.Entities.NPC.Npc;
+using EIA.Domain.Entities.NPC;
+using EIA.Infrastructure.Repositories.Base;
 
 namespace EIA.Infrastructure.Repositories;
 
-public class NpcRepository : INpcRepository
+public class NpcRepository
+    : RepositoryBase<Npc>, INpcRepository
 {
-    private readonly Dictionary<Guid, DomainNpc> _storage = new();
-
-
-    public void Add(DomainNpc npc)
+    protected override Guid GetEntityId(Npc entity)
     {
-        _storage[npc.Id] = npc;
+        return entity.Id;
     }
 
-
-    public IReadOnlyCollection<DomainNpc> GetAll()
+    public Npc? FindByFullName(string fullName)
     {
-        return _storage.Values.ToList();
-    }
-
-
-    public DomainNpc? GetById(Guid id)
-    {
-        _storage.TryGetValue(id, out var npc);
-
-        return npc;
-    }
-
-
-    public void Update(DomainNpc npc)
-    {
-        _storage[npc.Id] = npc;
-    }
-
-
-    public void Remove(Guid id)
-    {
-        _storage.Remove(id);
-    }
-
-
-    public DomainNpc? FindByFullName(string fullName)
-    {
-        return _storage.Values.FirstOrDefault(n =>
+        return Storage.Values.FirstOrDefault(n =>
             n.Identity.FullName.Equals(
                 fullName,
                 StringComparison.OrdinalIgnoreCase));
     }
 
-
-    public IReadOnlyCollection<DomainNpc> FindBySpecialty(
+    public IReadOnlyCollection<Npc> FindBySpecialty(
         string specialty)
     {
-        return _storage.Values
+        return Storage.Values
             .Where(n =>
                 n.Identity.Specialty.Equals(
                     specialty,
