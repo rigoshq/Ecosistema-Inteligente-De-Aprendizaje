@@ -4,6 +4,7 @@ using EIA.Core.World;
 using EIA.Infrastructure.Seed;
 using EIA.Domain.Entities;
 using EIA.Core.Missions;
+using EIA.Core.Engine;
 
 //----------------------------------------------------
 // Kernel del Ecosistema Inteligente de Aprendizaje
@@ -51,6 +52,8 @@ var missionService = new MissionService();
 
 missionService.Load(MissionSeeder.Create());
 
+builder.Services.AddSingleton<ExplorerEngine>();
+
 builder.Services.AddSingleton(missionService);
 
 //----------------------------------------------------
@@ -66,6 +69,10 @@ builder.Services.AddSingleton<ConceptMasteryEngine>();
 builder.Services.AddSingleton<MetaEngine>();
 
 builder.Services.AddSingleton<ExplorerIntelligencePipeline>();
+
+missionService.Load(MissionSeeder.Create());
+
+builder.Services.AddSingleton(missionService);
 
 //----------------------------------------------------
 // Aplicación

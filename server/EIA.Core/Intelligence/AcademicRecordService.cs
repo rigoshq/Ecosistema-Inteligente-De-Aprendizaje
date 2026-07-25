@@ -17,15 +17,29 @@ public class AcademicRecordService
         ExplorerAcademicRecord record,
         LearningEvidence evidence)
     {
-        //-------------------------------------------
-        // Registrar evidencia
-        //-------------------------------------------
+        //---------------------------------------------------
+        // 1. Registrar evidencia
+        //---------------------------------------------------
 
         record.AddEvidence(evidence);
 
-        //-------------------------------------------
-        // Calcular nuevos insights
-        //-------------------------------------------
+        //---------------------------------------------------
+        // 2. Registrar Timeline
+        //---------------------------------------------------
+
+        record.AddTimelineEvent(
+
+            new LearningTimelineEvent(
+
+                $"Actividad: {evidence.Source}",
+
+                evidence.Observation,
+
+                evidence.Competency));
+
+        //---------------------------------------------------
+        // 3. Calcular Insights
+        //---------------------------------------------------
 
         var insights =
             _insightEngine.Analyze(
@@ -33,13 +47,15 @@ public class AcademicRecordService
 
         record.AddInsights(insights);
 
-        //-------------------------------------------
-        // Calcular recomendaciones
-        //-------------------------------------------
+        //---------------------------------------------------
+        // 4. Calcular recomendaciones
+        //---------------------------------------------------
 
         var recommendations =
             _recommendationEngine.Generate(
+
                 record.LearningProfile,
+
                 insights);
 
         record.AddRecommendations(recommendations);
