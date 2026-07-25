@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EIA.Core.DTOs;
+using EIA.Core.Pipeline;
 using EIA.Core.Repositories;
 using EIA.Domain.Entities.Explorer;
 
@@ -11,22 +12,41 @@ public class ExplorerService
 {
     private readonly IExplorerRepository _repository;
 
-    public ExplorerService(IExplorerRepository repository)
+    private readonly ExplorerIntelligencePipeline _pipeline;
+
+    public ExplorerService(
+        IExplorerRepository repository,
+        ExplorerIntelligencePipeline pipeline)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _repository = repository
+            ?? throw new ArgumentNullException(nameof(repository));
+
+        _pipeline = pipeline
+            ?? throw new ArgumentNullException(nameof(pipeline));
     }
 
-    public async Task<Explorer> RegisterAsync(ExplorerRegistrationDto dto)
+    public async Task<Explorer> RegisterAsync(
+        ExplorerRegistrationDto dto)
     {
-        // ✅ Usamos el constructor de la entidad con los 4 parámetros requeridos
         var newExplorer = new Explorer(
             firstName: dto.FirstName,
             lastName: dto.LastName,
             userName: dto.UserName,
-            email: dto.Email // ⚠️ Aquí está el parámetro que faltaba
+            email: dto.Email
         );
 
         await _repository.AddAsync(newExplorer);
+
+        //------------------------------------------------------
+        // Próximamente:
+        //
+        // Crear AcademicRecord
+        // Inicializar Cognitive Twin
+        // Inicializar Educational Memory
+        // Inicializar Knowledge Genome
+        // Ejecutar ExplorerIntelligencePipeline
+        //------------------------------------------------------
+
         return newExplorer;
     }
 

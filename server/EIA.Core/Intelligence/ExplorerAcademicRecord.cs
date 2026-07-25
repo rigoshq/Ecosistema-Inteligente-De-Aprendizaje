@@ -22,13 +22,15 @@ public class ExplorerAcademicRecord
 
     public ExplorerAcademicRecord()
     {
-        LearningProfile = new();
+    LearningProfile = new();
 
-        _evidences = new();
+    Timeline = new();
 
-        _insights = new();
+    _evidences = new();
 
-        _recommendations = new();
+    _insights = new();
+
+    _recommendations = new();
     }
 
     public void AddEvidence(
