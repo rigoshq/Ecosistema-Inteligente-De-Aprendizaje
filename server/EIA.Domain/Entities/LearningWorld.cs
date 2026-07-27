@@ -1,5 +1,5 @@
 namespace EIA.Domain.Entities;
-
+using EIA.Domain.Entities.World;
 public class LearningWorld
 {
     public Guid Id { get; private set; }

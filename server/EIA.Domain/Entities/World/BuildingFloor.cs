@@ -8,7 +8,9 @@ public class BuildingFloor
 
     public List<BuildingRoom> Rooms { get; }
 
-    public BuildingFloor(int number)
+
+    public BuildingFloor(
+        int number)
     {
         Id = Guid.NewGuid();
 
@@ -17,7 +19,9 @@ public class BuildingFloor
         Rooms = new();
     }
 
-    public void AddRoom(BuildingRoom room)
+
+    public void AddRoom(
+        BuildingRoom room)
     {
         Rooms.Add(room);
     }

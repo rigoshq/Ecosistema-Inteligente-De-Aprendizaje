@@ -6,7 +6,9 @@ public class BuildingRoom
 
     public string Name { get; private set; }
 
-    public BuildingRoom(string name)
+
+    public BuildingRoom(
+        string name)
     {
         Id = Guid.NewGuid();
 

@@ -26,6 +26,7 @@ public class Building
 
     public List<BuildingRoom> Rooms { get; }
 
+
     private Building()
     {
         Id = Guid.NewGuid();
@@ -38,9 +39,12 @@ public class Building
             "",
             "",
             "",
-            "");
+            ""
+        );
 
-        Entrance = new BuildingEntrance("Entrada Principal");
+        Entrance = new BuildingEntrance(
+            "Entrada Principal"
+        );
 
         Navigation = new BuildingNavigation();
 
@@ -52,6 +56,7 @@ public class Building
 
         Active = true;
     }
+
 
     public Building(
         string name,
@@ -66,20 +71,24 @@ public class Building
         Type = type;
     }
 
+
     public void AddFloor(BuildingFloor floor)
     {
         Floors.Add(floor);
     }
+
 
     public void AddRoom(BuildingRoom room)
     {
         Rooms.Add(room);
     }
 
+
     public void Activate()
     {
         Active = true;
     }
+
 
     public void Deactivate()
     {

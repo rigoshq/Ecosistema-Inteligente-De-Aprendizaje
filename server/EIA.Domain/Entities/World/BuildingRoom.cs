@@ -8,6 +8,7 @@ public class BuildingRoom
 
     public int Capacity { get; }
 
+
     public BuildingRoom(
         string name,
         int capacity)
